@@ -1,5 +1,8 @@
 
 
+class RK3288RegBase:
+	PMU_BASE	=0xff730000
+	GRF_BASE	=0xff770000
 
 class RK3288RegMux:
 
