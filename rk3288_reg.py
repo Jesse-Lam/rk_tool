@@ -184,17 +184,112 @@ class RK3288RegMux:
 				['gpio5b6', 'spi0_txd', 'ts0_data6', 'uart4exp_sout'], \
 				['gpio5b7', 'spi0_rxd', 'ts0_data7', 'uart4exp_sin'])
 
-	GRF_GPIO5C_IOMUX	=0x0054
+				# 2'b00
+	GRF_GPIO5C_IOMUX	= (0x0054, \
+				['gpio5c0', 'spi0_csn1', 'ts0_sync', 'reserved'], \
+				['gpio5c1', 'ts0_valid'], \
+				['gpio5c2', 'ts0_clk'], \
+				['gpio5c3', 'ts0_err'], \
+				[''], \
+				[''], \
+				[''], \
+				[''])
 
-	GRF_GPIO6A_IOMUX	=0x005c
-	GRF_GPIO6B_IOMUX	=0x0060
-	GRF_GPIO6C_IOMUX	=0x0064
+				# 2'b00
+	GRF_GPIO6A_IOMUX	= (0x005c, \
+				['gpio6a0', 'i2s_sclk'], \
+				['gpio6a1', 'i2s_lrckrx'], \
+				['gpio6a2', 'i2s_lrcktx'], \
+				['gpio6a3', 'i2s_sdi'], \
+				['gpio6a4', 'i2s_sdo0'], \
+				['gpio6a5', 'i2s_sdo1'], \
+				['gpio6a6', 'i2s_sdo2'], \
+				['gpio6a7', 'i2s_sdo3'])
 
-	GRF_GPIO7A_IOMUX	=0x006c
-	GRF_GPIO7B_IOMUX	=0x0070
-	GRF_GPIO7CL_IOMUX	=0x0074
-	GRF_GPIO7CH_IOMUX	=0x0078
+				# 2'b00
+	GRF_GPIO6B_IOMUX	= (0x0060, \
+				['gpio6b0', 'i2s_clk'], \
+				['gpio6b1', 'i2c1audio_sda'], \
+				['gpio6b2', 'i2c1audio_scl'], \
+				['gpio6b3', 'spi_tx'], \
+				[''], \
+				[''], \
+				[''], \
+				[''])
 
-	GRF_GPIO8A_IOMUX	=0x0080
-	GRF_GPIO8B_IOMUX	=0x0084
+				# 2'b00
+	GRF_GPIO6C_IOMUX	= (0x0064, \
+				['gpio6c0', 'sdmmc0_data0', 'jtag_tms', 'reserved'], \
+				['gpio6c1', 'sdmmc0_data1', 'jtag_trstn', 'reserved'], \
+				['gpio6c2', 'sdmmc0_data2', 'jtag_tdi', 'reserved'], \
+				['gpio6c3', 'sdmmc0_data3', 'jtag_tck', 'reserved'], \
+				['gpio6c4', 'sdmmc0_clkout', 'jtag_tdo', 'reserved'], \
+				['gpio6c5', 'sdmmc0_cmd'], \
+				['gpio6c6', 'sdmmc0_dectn'], \
+				[''])
+
+				# 2'b00
+	GRF_GPIO7A_IOMUX	= (0x006c, \
+				['gpio7a0', 'pwm_0', 'vop0_pwm', 'vop1_pwm'], \
+				['gpio7a1', 'pwm1'], \
+				[''], \
+				[''], \
+				[''], \
+				[''], \
+				[''], \
+				['gpio7a7', 'uart3gps_sin', 'gps_mag', 'hsadct1_data0'])
+
+				# 2'b00
+	GRF_GPIO7B_IOMUX	= (0x0070, \
+				['gpio7b0', 'uart3gps_sout', 'gps_sig', 'hsadct1_data1'], \
+				['gpio7b1', 'uart3gps_ctsn', 'gps_rfclk', 'gpst1_clk'], \
+				['gpio7b2', 'uart3gps_rtsn', 'usb_drvvbus0', 'reserved'], \
+				['gpio7b3', 'usb_drvvbus1', 'edp_hotplug', 'reserved'], \
+				['gpio7b4', 'isp_shutteren', 'spi1_clk', 'reserved'], \
+				['gpio7b5', 'isp_flashtrigout', 'spi1_csn0', 'reserved'], \
+				['gpio7b6', 'isp_prelighttrig', 'spi1_rxd', 'reserved'], \
+				['gpio7b7', 'isp_shuttertrig', 'spi1_txd', 'reserved'])
+
+				# 2'b00
+	GRF_GPIO7CL_IOMUX	= (0x0074, \
+				['gpio7c0', 'isp_flashtrigin', 'edphdmi_cecinoutt1', 'reserved'], \
+				['gpio7c1', 'i2c4tp_sda'], \
+				['gpio7c2', 'i2c4tp_scl'], \
+				['gpio7c3', 'i2c5hdmi_sda', 'edphdmii2c_sda', 'reserved'], \
+				[''], \
+				[''], \
+				[''], \
+				[''])
+
+				# 2'b00 3'b000
+	GRF_GPIO7CH_IOMUX	= (0x0078, \
+				['gpio7c4', 'i2c5hdmi_scl', 'edphdmii2c_scl', 'reserved'], \
+				[''], \
+				[''], \
+				[''], \
+				['gpio7c6', 'uart2dbg_sin', 'uart2dbg_sirin', 'pwm_2'], \
+				[''], \
+				['gpio7c7', 'uart2dbg_sout', 'uart2dbg_sirout', 'pwm_3', 'edphdmi_cecinout', 'reserved'])
+
+				# 2'b00
+	GRF_GPIO8A_IOMUX	= (0x0080, \
+				['gpio8a0', 'ps2_clk', 'sc_vcc18v', 'reserved'], \
+				['gpio8a1', 'ps2_data', 'sc_vcc33v', 'reserved'], \
+				['gpio8a2', 'sc_detectt1'], \
+				['gpio8a3', 'spi2_csn1', 'sc_iot1', 'reserved'], \
+				['gpio8a4', 'i2c2sensor_sda', 'sc_rst', 'reserved'], \
+				['gpio8a5', 'i2c2sensor_scl', 'sc_clk', 'reserved'], \
+				['gpio8a6', 'spi2_clk', 'sc_io', 'reserved'], \
+				['gpio8a7', 'spi2_csn0', 'sc_detect', 'reserved'])
+
+				# 2'b00
+	GRF_GPIO8B_IOMUX	= (0x0084, \
+				['gpio8b0', 'spi2_rxd', 'sc_rst', 'reserved'], \
+				['gpio8b1', 'spi2_txd', 'sc_clk', 'reserved'], \
+				[''], \
+				[''], \
+				[''], \
+				[''], \
+				[''], \
+				[''])
 
