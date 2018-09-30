@@ -18,7 +18,7 @@ def is_one_device():
 
 def io_read(addr, leng):
 	cmd="adb shell io -4 -r -l " + leng + " " + addr
-	print cmd
+	#print cmd
 	res = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[0]
 	addr = addr[2:10] + ':'
 	if res.find(addr) == 0:
