@@ -4,15 +4,11 @@ import sys
 import rk3288_reg
 import adb_cmd
 import rk3288_get_reg_val
+import re
+import os
 
-if __name__ == "__main__":
-
-	if adb_cmd.is_one_device() == False:
-		print "There have no device or have more than one device"
-		sys.exit()
-
-
-	print "-----------RK3288 GPIO_MUX-----------"
+def DisplayAllGpioMux(log):
+	print >> log, "-----------RK3288 GPIO_MUX-----------"
 	reg_all = rk3288_get_reg_val.GetPMUGpioIOMUX()
 	for x in range(0, 3):
 		reg_val = reg_all[x]
@@ -28,13 +24,13 @@ if __name__ == "__main__":
 			if func_num == 1:
 				continue
 			else:
-				print gpio_mux[i][0] + ':',
+				print >> log, gpio_mux[i][0] + ':',
 				if func_num == 2:
-					print gpio_mux[i][reg_val & 0x1]
+					print >> log, gpio_mux[i][reg_val & 0x1]
 				else:
-					print gpio_mux[i][reg_val & 0x3]
+					print >> log, gpio_mux[i][reg_val & 0x3]
 				reg_val = reg_val >> 2
-		print "-------------------------------------"
+		print >> log, "-------------------------------------"
 
 
 	reg_all = rk3288_get_reg_val.GetGpioIOMUX()
@@ -100,30 +96,65 @@ if __name__ == "__main__":
 				if func_num == 1:
 					continue
 				else:
-					print gpio_mux[i][0] + ':',
+					print >> log, gpio_mux[i][0] + ':',
 					if func_num == 2:
-						print gpio_mux[i][reg_val & 0x1]
+						print >> log, gpio_mux[i][reg_val & 0x1]
 					else:
-						print gpio_mux[i][reg_val & 0x3]
+						print >> log, gpio_mux[i][reg_val & 0x3]
 					reg_val = reg_val >> 2
-			print "-------------------------------------"
+			print >> log, "-------------------------------------"
 		elif len(gpio_mux) == 5: #for 3'b000
 			for i in range(1, 5):
 				func_num = len(gpio_mux[i])
 				if func_num == 1:
 					continue
 				else:
-					print gpio_mux[i][0] + ':',
-					print gpio_mux[i][reg_val & 0x7]
+					print >> log, gpio_mux[i][0] + ':',
+					print >> log, gpio_mux[i][reg_val & 0x7]
 					reg_val = reg_val >> 4
-			print "-------------------------------------"
+			print >> log, "-------------------------------------"
 		elif len(gpio_mux) == 8: #for GRF_GPIO7CH_IOMUX
-			print gpio_mux[1][0] + ':',
-			print gpio_mux[1][reg_val & 0x3]
+			print >> log, gpio_mux[1][0] + ':',
+			print >> log, gpio_mux[1][reg_val & 0x3]
 			reg_val = reg_val >> 2*4
-			print gpio_mux[5][0] + ':',
-			print gpio_mux[5][reg_val & 0x3]
+			print >> log, gpio_mux[5][0] + ':',
+			print >> log, gpio_mux[5][reg_val & 0x3]
 			reg_val = reg_val >> 2*2
-			print gpio_mux[7][0] + ':',
-			print gpio_mux[7][reg_val & 0x3]
-			print "-------------------------------------"
+			print >> log, gpio_mux[7][0] + ':',
+			print >> log, gpio_mux[7][reg_val & 0x3]
+			print >> log, "-------------------------------------"
+
+if __name__ == "__main__":
+
+	LogFile = 'rk3288_iomux.log'
+
+	if adb_cmd.is_one_device() == False:
+		print "There have no device or have more than one device"
+		sys.exit()
+
+	if len(sys.argv) == 1:
+		print "The usage:"
+		print "./rk3288_iomux_check.py gpio0d0"
+		print "./rk3288_iomux_check.py gpio0"
+		print "./rk3288_iomux_check.py all"
+
+	if len(sys.argv) == 2:
+		#print sys.argv[1]
+		if os.path.isfile(LogFile):
+			os.remove(LogFile)
+		f=open(LogFile,'a+')
+		DisplayAllGpioMux(f);
+		f.close()
+		if sys.argv[1] == 'all':
+			f=open(LogFile,'r')
+			LogPage = f.read()
+			print LogPage
+			f.close()
+		else:
+			f=open(LogFile,'r')
+			LogLines = f.readlines()
+			for i in range(len(LogLines) - 1):
+				if sys.argv[1] in LogLines[i]:
+					print LogLines[i]
+			f.close()
+
